@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LIST HARGA REGE/GS/PANEL NYA</title>
-    <title>ALL TRANSAKSI UDAH OTOMATIS</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -91,6 +90,10 @@
             margin: 10px auto;
             display: block;
         }
+        .qris-manual {
+            margin: 20px 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -134,19 +137,19 @@
                 <li>Setelah verifikasi, link download untuk produk yang dibeli akan muncul.</li>
             </ol>
         </div>
-        
-        <button onclick="showPaymentInfo()">Tampilkan QRIS dan Nomor Dana</button>
 
-        <div class="qris">
-            <p>QRIS:</p>
-            <img src="https://telegra.ph/file/4978030178c3acda4078f.jpg" alt="QRIS" style="max-width: 100%;">
-            <p>Nomor Dana: 087760185040 atau 085792239514</p>
-        </div>
-        
         <div class="qris">
             <input type="number" id="nominalTF" placeholder="Masukkan nominal transfer">
             <button onclick="generateQRIS()">Dapatkan QRIS</button>
             <div id="qrisImage"></div>
+        </div>
+
+        <div class="qris-manual">
+            <button onclick="showQRISManual()">Lihat QRIS Manual</button>
+            <div id="qrisManualImage" style="display: none;">
+                <img src="path/to/https://telegra.ph/file/4978030178c3acda4078f.jpg.png" alt="QRIS Manual">
+                <p>Nomor DANA: 1234567890</p>
+            </div>
         </div>
 
         <div class="upload-section">
@@ -173,6 +176,11 @@
             }
         }
 
+        function showQRISManual() {
+            var qrisManual = document.getElementById('qrisManualImage');
+            qrisManual.style.display = 'block';
+        }
+
         function showDownloadLink() {
             var kodeProduk = document.getElementById('kodeProduk').value.toLowerCase();
             var downloadLink = document.getElementById('downloadLink');
@@ -180,7 +188,7 @@
             var links = {
                 'gs30': 'https://drive.google.com/file/d/1yJAcKBx_QSxEGHZZklaMF0duyzJDltg9/view?usp=drive_link',
                 'gs40': 'https://drive.google.com/file/d/1yJAcKBx_QSxEGHZZklaMF0duyzJDltg9/view?usp=drive_link',
-                'gs50': 'https://drive.google.com/file/d/1yJAcKBx_QSxEGHZZklaMF0duyzJDltg9/view?usp=drive_link.',
+                'gs50': 'https://drive.google.com/file/d/1yJAcKBx_QSxEGHZZklaMF0duyzJDltg9/view?usp=drive_link',
                 'gs60': 'https://drive.google.com/file/d/1yJAcKBx_QSxEGHZZklaMF0duyzJDltg9/view?usp=drive_link',
                 'gs70': 'https://drive.google.com/file/d/1yJAcKBx_QSxEGHZZklaMF0duyzJDltg9/view?usp=drive_link',
                 'gs80': 'https://drive.google.com/file/d/1yJAcKBx_QSxEGHZZklaMF0duyzJDltg9/view?usp=drive_link',
