@@ -147,7 +147,7 @@
         <div class="qris-manual">
             <button onclick="showQRISManual()">Lihat QRIS Manual</button>
             <div id="qrisManualImage" style="display: none;">
-                <img src="path/to/https://telegra.ph/file/4978030178c3acda4078f.jpg.png" alt="QRIS Manual">
+                <img src="path/to/https://telegra.ph/file/4978030178c3acda4078f.jpg" alt="QRIS Manual">
                 <p>Nomor DANA: 087760185040 atau 085792239514</p>
             </div>
         </div>
@@ -170,7 +170,7 @@
             var nominal = document.getElementById('nominalTF').value;
             if (nominal) {
                 var qrisLink = 'https://saweria.co/Artaboys?nominal=' + nominal;
-                document.getElementById('qrisImage').innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?data=' + encodeURIComponent(qrisLink) + '&size=200x200" alt="QRIS">';
+                document.getElementById('qrisImage').innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?data=' + encodeURIComponent(qrisLink) + '&size=600x600" alt="QRIS">';
             } else {
                 alert('Masukkan nominal transfer terlebih dahulu.');
             }
