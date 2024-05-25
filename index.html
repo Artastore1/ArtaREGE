@@ -127,8 +127,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 100vw;
-            height: 100vh;
+            width: 80%;
+            height: auto;
             z-index: 1001;
             object-fit: cover;
         }
@@ -200,7 +200,7 @@
         <a id="downloadLink" href="#">Download Link</a>
     </div>
 
-    <img src="https://i.gifer.com/2a9n.gif" alt="Explosion" class="explosion" id="explosion">
+    <img src="https://www.gambaranimasi.org/data/media/492/animasi-bergerak-kembang-api-0088.gif" alt="Explosion" class="explosion" id="explosion">
 
     <script>
         function showQRIS() {
@@ -254,9 +254,11 @@
                 explosion.style.display = 'block';
                 
                 setTimeout(function() {
-                    notification.style.display = 'none';
                     explosion.style.display = 'none';
                     popup.style.display = 'block';
+                    setTimeout(function() {
+                        notification.style.display = 'none';
+                    }, 20000); // Durasi notifikasi 10 detik
                 }, 2000); // Durasi efek ledakan 2 detik
             } else {
                 alert('Kode produk tidak dikenal!');
