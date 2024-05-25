@@ -144,13 +144,20 @@
             <div id="qrisImage"></div>
         </div>
 
-        <div class="qris-manual">
-            <button onclick="showQRISManual()">Lihat QRIS Manual</button>
-            <div id="qrisManualImage" style="display: none;">
-                <img src="path/to/https://telegra.ph/file/4978030178c3acda4078f.jpg" alt="QRIS Manual">
-                <p>Nomor DANA: 087760185040 atau 085792239514</p>
-            </div>
-        </div>
+            <script>
+        function showQRIS() {
+            var nominal = document.getElementById('nominalTF').value;
+            if (nominal) {
+                var qrisHtml = `
+                    <h3>QRIS dan Nomor DANA</h3>
+                    <img src="https://telegra.ph/file/4978030178c3acda4078f.jpg" alt="QRIS">
+                    <p>Nomor DANA: 087760185040</p>
+                `;
+                document.getElementById('qrisContainer').innerHTML = qrisHtml;
+            } else {
+                alert('Masukkan nominal transfer terlebih dahulu.');
+            }
+        }
 
         <div class="upload-section">
             <p>Upload Bukti Transfer:</p>
