@@ -137,27 +137,13 @@
                 <li>Setelah verifikasi, link download untuk produk yang dibeli akan muncul.</li>
             </ol>
         </div>
+</div>
 
         <div class="qris">
             <input type="number" id="nominalTF" placeholder="Masukkan nominal transfer">
-            <button onclick="generateQRIS()">Dapatkan QRIS</button>
-            <div id="qrisImage"></div>
+            <button onclick="showQRIS()">Dapatkan QRIS</button>
+            <div id="qrisContainer"></div>
         </div>
-
-            <script>
-        function showQRIS() {
-            var nominal = document.getElementById('nominalTF').value;
-            if (nominal) {
-                var qrisHtml = `
-                    <h3>QRIS dan Nomor DANA</h3>
-                    <img src="https://telegra.ph/file/4978030178c3acda4078f.jpg" alt="QRIS">
-                    <p>Nomor DANA: 087760185040</p>
-                `;
-                document.getElementById('qrisContainer').innerHTML = qrisHtml;
-            } else {
-                alert('Masukkan nominal transfer terlebih dahulu.');
-            }
-        }
 
         <div class="upload-section">
             <p>Upload Bukti Transfer:</p>
@@ -173,25 +159,30 @@
     </div>
 
     <script>
-        function generateQRIS() {
+        function showQRIS() {
             var nominal = document.getElementById('nominalTF').value;
             if (nominal) {
-                var qrisLink = 'https://saweria.co/Artaboys?nominal=' + nominal;
-                document.getElementById('qrisImage').innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?data=' + encodeURIComponent(qrisLink) + '&size=600x600" alt="QRIS">';
+                var qrisHtml = `
+                    <h3>QRIS dan Nomor DANA</h3>
+                    <img src="https://telegra.ph/file/4978030178c3acda4078f.jpg" alt="QRIS">
+                    <p>Nomor DANA: 087760185040</p>
+                `;
+                document.getElementById('qrisContainer').innerHTML = qrisHtml;
             } else {
                 alert('Masukkan nominal transfer terlebih dahulu.');
             }
         }
 
-        function showQRISManual() {
-            var qrisManual = document.getElementById('qrisManualImage');
-            qrisManual.style.display = 'block';
-        }
-
         function showDownloadLink() {
+            var buktiTF = document.getElementById('buktiTF').files[0];
             var kodeProduk = document.getElementById('kodeProduk').value.toLowerCase();
             var downloadLink = document.getElementById('downloadLink');
 
+            if (!buktiTF) {
+                alert('Harap upload bukti transfer.');
+                return;
+        }  
+           
             var links = {
                 'gs30': 'https://drive.google.com/file/d/1yJAcKBx_QSxEGHZZklaMF0duyzJDltg9/view?usp=drive_link',
                 'gs40': 'https://drive.google.com/file/d/1yJAcKBx_QSxEGHZZklaMF0duyzJDltg9/view?usp=drive_link',
