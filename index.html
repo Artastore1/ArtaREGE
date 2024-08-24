@@ -3,96 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEND DATA PANEL / ADMIN PANEL</title>
+    <title>OWN,PT DAN ADP PANEL</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            text-align: center;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
         .container {
-            background-color: #fff;
+            margin: 50px auto;
+            max-width: 600px;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            background-color: #2e2e2e;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
-        .container h1 {
-            text-align: center;
+        h1 {
+            color: #4CAF50;
             margin-bottom: 20px;
         }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-        }
-        .button-group button {
-            width: 48%;
-            padding: 10px;
-            background-color: #007BFF;
-            color: #fff;
+        input, button {
+            width: 80%;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
             border: none;
-            border-radius: 4px;
+            font-size: 16px;
+        }
+        input {
+            background-color: #333;
+            color: #ffffff;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
             cursor: pointer;
         }
-        .button-group button:hover {
-            background-color: #0056b3;
+        button:hover {
+            background-color: #45a049;
+        }
+        .menu {
+            margin: 20px 0;
+        }
+        .menu button {
+            width: 80%;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .hidden {
+            display: none;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: #fff;
+            z-index: 1000;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 900;
         }
     </style>
-    <script>
-        function handleSubmit(option) {
-            const waNumber = document.getElementById('waNumber').value;
-            const name = document.getElementById('name').value;
-            const password = document.getElementById('password').value;
-
-            if (option === 'admin') {
-                const adminText = `*BERIKUT DATA ADMIN PANEL ANDA*\nNama: ${name}\nPassword: ${password}`;
-                const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(adminText)}`;
-                window.location.href = url;
-            } else if (option === 'panel') {
-                const panelText = `*BERIKUT DATA PANEL ANDA*\nNama: ${name}\nPassword: ${password}`;
-                const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(panelText)}`;
-                window.location.href = url;
-            }
-        }
-    </script>
 </head>
 <body>
     <div class="container">
-        <h1>SEND DATA PANEL / ADMIN PANEL</h1>
-        <h1>BY MONTU</h1>
-        <div class="form-group">
-            <label for="waNumber">Nomor WA:</label>
-            <input type="text" id="waNumber" placeholder="Masukkan nomor WA">
+        <h1>Pterodactyl Panel Management</h1>
+        <div class="menu">
+            <button onclick="showAdminPanel()">Buat Admin Panel Pterodactyl</button>
+            <button onclick="showServerPanel()">Buat Panel Server Pterodactyl</button>
         </div>
-        <div class="form-group">
-            <label for="name">Nama:</label>
-            <input type="text" id="name" placeholder="Masukkan nama">
+
+        <div id="adminPanelForm" class="hidden">
+            <h2>Create Admin Panel</h2>
+            <form id="createAdminForm">
+                <input type="text" id="adminName" placeholder="Enter Admin Name" required>
+                <input type="password" id="adminPassword" placeholder="Enter Admin Password" required>
+                <button type="submit">Create Admin</button>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" placeholder="Masukkan password" value="PasswordAnda">
-        </div>
-        <div class="button-group">
-            <button onclick="handleSubmit('admin')">Send Data Admin Panel</button>
-            <button onclick="handleSubmit('panel')">Send Data Panel</button>
+
+        <div id="serverPanelForm" class="hidden">
+            <h2>Create Server Panel</h2>
+            <form id="createServerForm">
+                <input type="text" id="serverName" placeholder="Enter Server Name" required>
+                <input type="password" id="serverPassword" placeholder="Enter Server Password" required>
+                <input type="number" id="serverCPU" placeholder="Enter CPU" required>
+                <input type="number" id="serverRAM" placeholder="Enter RAM (MB)" required>
+                <input type="number" id="serverDisk" placeholder="Enter Disk Space (MB)" required>
+                <button type="submit">Create Server</button>
+            </form>
         </div>
     </div>
+
+    <div class="overlay"></div>
+    <div class="popup">
+        <h2>Operation Successful!</h2>
+        <p id="details"></p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        const API_KEY_PLTA = 'ptla_HjcI1YUXN7CKx8eT2YOoFWoIVVkonXXW5paLgsgnFbv'; // Masukkan API key PLTA di sini
+        const API_KEY_PLTC = 'ptlc_CgHHtSzvoPsjhcn5UWxnn5qXJv8k0Ki6UBM2MsrtTU2'; // Masukkan API key pltc di sini
+        const DOMAIN = 'https://montunetwork.piwzpediaaa.biz.id';
+
+        function showAdminPanel() {
+            document.getElementById('serverPanelForm').classList.add('hidden');
+            document.getElementById('adminPanelForm').classList.remove('hidden');
+            const msg = new SpeechSynthesisUtterance("Anda memasuki halaman buat admin panel");
+            window.speechSynthesis.speak(msg);
+        }
+
+        function showServerPanel() {
+            document.getElementById('adminPanelForm').classList.add('hidden');
+            document.getElementById('serverPanelForm').classList.remove('hidden');
+            const msg = new SpeechSynthesisUtterance("Anda memasuki halaman buat server panel");
+            window.speechSynthesis.speak(msg);
+        }
+
+        document.getElementById('createAdminForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('adminName').value;
+            const password = document.getElementById('adminPassword').value;
+
+            fetch(`${DOMAIN}/api/application/users`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${API_KEY_PLTA}`
+                },
+                body: JSON.stringify({
+                    username: name,
+                    email: name + '@example.com',
+                    first_name: name,
+                    last_name: 'Admin',
+                    password: password,
+                    root_admin: true
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('details').innerText = `Admin Created!\nUsername: ${name}\nPassword: ${password}`;
+                showPopup();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        document.getElementById('createServerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('serverName').value;
+            const password = document.getElementById('serverPassword').value;
+            const cpu = document.getElementById('serverCPU').value;
+            const ram = document.getElementById('serverRAM').value;
+            const disk = document.getElementById('serverDisk').value;
+
+            fetch(`${DOMAIN}/api/application/servers`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${API_KEY_PLTC}`
+                },
+                body: JSON.stringify({
+                    name: name,
+                    user: 1, // Adjust this user ID to match your admin
+                    egg: 1, // Adjust Egg ID
+                    docker_image: 'quay.io/pterodactyl/core:java',
+                    startup: "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}",
+                    environment: {
+                        SERVER_JARFILE: "server.jar",
+                        VANILLA_VERSION: "latest"
+                    },
+                    limits: {
+                        memory: ram,
+                        swap: 0,
+                        disk: disk,
+                        io: 500,
+                        cpu: cpu
+                    },
+                    feature_limits: {
+                        databases: 1,
+                        allocations: 1
+                    },
+                    allocation: {
+                        default: 1 // Adjust allocation ID
+                    }
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('details').innerText = `Server Created!\nName: ${name}\nCPU: ${cpu}\nRAM: ${ram} MB\nDisk: ${disk} MB`;
+                showPopup();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        function showPopup() {
+            document.querySelector('.overlay').style.display = 'block';
+            document.querySelector('.popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.querySelector('.overlay').style.display = 'none';
+            document.querySelector('.popup').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
